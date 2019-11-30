@@ -1,6 +1,11 @@
+from django.views.generic.base import TemplateView
 import json
 import requests
 
-data = requests.get('http://hangang.dkserver.wo.tc/')
-data = data.json()
-data['temp'] #한강 수온
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+    def get_temp(self):
+        data = requests.get('http://hangang.dkserver.wo.tc/')
+        data = data.json()
+        return data['temp'] #한강 수온 float
