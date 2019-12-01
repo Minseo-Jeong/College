@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+<style>
+.demo-charts {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+</style>
+
+{% block content %}
+
+<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+        {{dday}}일
+</div>
+<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+        한강수온{{temp}}
+</div>
+{% endblock %}

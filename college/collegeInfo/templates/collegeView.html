@@ -1,0 +1,13 @@
+{{college_info_list}}
+{% if college_info_list %}
+    <ul>
+        {% for college in college_info_list %}
+            <li>
+                {{college.college_name}} <br>
+                {{college.info}} <br>
+                {{college.established}} <br>
+                {{college.location}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
