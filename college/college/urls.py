@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomeView.as_view(), name='home'),
     path('collegeInfo/', include('collegeInfo.urls')),
+    path('MajorInfo/', include('MajorInfo.urls')),
     # path('',HomeView, name='home')
 ]
