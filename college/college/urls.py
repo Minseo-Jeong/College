@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('collegeInfo/', include('collegeInfo.urls')),
     path('MajorInfo/', include('MajorInfo.urls')),
+    path('prediction/', include('prediction.urls')),
     # path('',HomeView, name='home')
 ]

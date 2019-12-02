@@ -1,7 +1,9 @@
 from django.urls import path
-from collegeInfo import views
+from prediction import views
 
 urlpatterns = [
-    path('', views.MainView.as_view(), name='MainView'),
-    # path('', views.Test, name='MainView'),
+    # path('', views.renew_book_librarian, name='renew-book-librarian'),
+    path('', views.Test, name='predictionView'),
+    path('post/', views.posttest, name='posttest'),
+    
 ]

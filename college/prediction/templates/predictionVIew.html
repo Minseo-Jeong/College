@@ -1,1 +1,21 @@
 {% extends 'base.html' %}
+{% block content %}
+
+<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <form action="/prediction/post/" method="post">
+        {% csrf_token %}
+        <input type="text" style="margin: 3%;" name="korean"><br>
+        <input type="text" style="margin: 3%;" name="math"><br>
+        <input type="text" style="margin: 3%;" name="English"><br>
+        <input type="text" style="margin: 3%;" name="research1"><br>
+        <input type="text" style="margin: 3%;" name="research2"><br>
+        <input type="text" style="margin: 3%;" name="history">
+        <!-- {% for choice in question.choice_set.all %} -->
+            <!-- <input type="radio" name="choice" id="choice_{{ forloop.counter }}" value="{{choice.id}}">    
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
+        <!-- {% endfor %} -->
+        <input type="submit" value="분석하기"> 
+    </form>
+</div>
+
+{% endblock %}
