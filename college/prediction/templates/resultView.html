@@ -16,8 +16,8 @@
             <h3 class="textView">{{result}}</h3>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textclass">
-            <label class="textlabel">커트라인</label>
-            <h3 class="textView">{{result}}</h3>
+            <label class="textlabel" >커트라인</label>
+            <h3 class="textView"id="cut"></h3>
     </div>
     
 
@@ -46,16 +46,27 @@
 
     var chart = new Chart(graph, {
         type: 'horizontalBar',
-
+        // backgroundColor: #40e0d0,
         data: {
             labels: [data.college_name,"내 성적"],
             datasets: [{
                 type: 'horizontalBar',
                 label: '점수',
-                data: [data.cutline,result]
+                data: [data.cutline,result],
+                // backgroundColor: #ffffff
+                
+                backgroundColor: [
+                // 'rgba(255, 99, 132, 0.2)',
+                'rgba(64, 224, 208, 0.3)',
+                'rgba(64, 224, 208, 0.7)'
+                
+                ],
+                
             }]
         }
     })
+
+    document.getElementById("cut").innerText = data.cutline
 
 </script>
 {% endblock %}

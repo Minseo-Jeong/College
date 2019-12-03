@@ -208,13 +208,13 @@ def posttest(request):
     # print(pk_index in SKKU.natural_sc)
 
     if pk_index in SKKU.natural_sc:
-        SKKU.setGrade([123, 110, 1, 2, 1, 60, 60, 4], 1)
+        SKKU.setGrade(arr_grade, 1)
         SKKU.percentile(1)
         SKKU.EngPoint()
         SKKU.HisPoint()
         result = SKKU.caculate_NaturalSciences()  # 이과
     else:
-        SKKU.setGrade([123, 110, 1, 2, 1, 60, 60, 4], 0)
+        SKKU.setGrade(arr_grade, 0)
         SKKU.percentile(0)
         if SKKU.grade[2] == 1:
             SKKU.advantage_math()
