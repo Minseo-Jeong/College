@@ -10,6 +10,7 @@ class MainView(ListView):
     template_name = 'collegeView.html'
     context_object_name = 'college_info_list'
     print(model.objects.all())
+    
 
     def get_obj(self):       
         return model.objects.all()
