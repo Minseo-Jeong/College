@@ -1,23 +1,83 @@
 {% extends 'base.html' %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 {% block content %}
-<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    {{college_info_list}}
+
+  <style>
+    .body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      width: 300px;   /* 이거 카드 사이즈노 가로 */
+      margin: 8px;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      padding: 2px 16px;
+    }
+    .containercontainer{
+    }
+    .content{
+        margin-left:auto;margin-right:auto;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        /* padding-left: auto; */
+        /* padddding:0 auto; */
+        /*
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+        */
+        /* padding-right: auto; */
+    }
+    @media screen and (max-width: 1280px) {
+        .content{
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+
+        }
+    }
+    @media screen and (max-width: 500px) {
+        .content{
+        grid-template-rows: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+
+        }
+    }
+  </style>
+<!-- <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid"> -->
+    
+    <div class="content">
 {% if college_info_list %}
-    <ul>
-        {% for college in college_info_list %}
-            <li>
+    {% for college in college_info_list %}
+            <!-- <li>
                 {{college.college_name}} <br>
                 {{college.info}} <br>
-                {{college.established}} <br>
-                {{college.location}}
+                <!-- {{college.established}} <br> -->
+                <!-- {{college.location}} -->
                 
-            </li>
-            <div>
-                <img src={{college.established}}>
-                <!-- <img src="http://www.snu.ac.kr/images/common/img/img01_mark_ab0102.gif"/> -->
+
+            <div class="card">
+                <a href={{college.location}}><img src={{college.established}} alt="Avatar" style="width:100%; height: 300px;"></a>
+                <div class="container">
+                  <h4>{{college.college_name}}</h4>
+                  <p>{{college.info}}</p>
+                  <!-- <p>{{college.location}}</p> -->
+
+                </div>
             </div>
-        {% endfor %}
-    </ul>
+    {% endfor %}
+        
+
 {% endif %}
       
 </div>

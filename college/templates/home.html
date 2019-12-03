@@ -1,19 +1,84 @@
 {% extends 'base.html' %}
 
-<style>
-.demo-charts {
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-</style>
 
 {% block content %}
+<style>
+        .gazak {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+        }
 
-<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-        {{dday}}일
+        .gazak>* {
+                flex: 1;
+                height: 400px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+        }
+
+        .gazak * {
+                font-size: 48px;
+        }
+
+        .dieday,
+        .pongdang {
+                transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1);
+                color: #757575 !important;
+                max-width: 400px;
+        }
+
+        .dieday:hover,
+        .pongdang:hover {
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        .pongdang {
+                position: relative;
+                display: flex;
+                margin-left: 30px;
+        }
+
+        .pongdang img {
+                position: absolute;
+                height: 300px;
+                transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1);
+                filter: hue-rotate(10deg);
+        }
+
+        .pongdang span {
+                z-index: 5;
+                color: white;
+        }
+
+        @media (max-width: 1000px) {
+                .gazak>* {
+                        flex-basis: 100%;
+                }
+
+                .pongdang,.dieday {
+                        margin-left: 0;
+                }
+
+        }
+</style>
+<div class="gazak">
+        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid dieday">
+                <h3>
+                        D-{{dday}}
+                </h3>
+        </div>
+        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid pongdang">
+                <img src="https://cdn.icon-icons.com/icons2/1808/PNG/512/water_115174.png" alt="">
+                <span>
+
+                        {{temp}}
+                </span>
+        </div>
 </div>
-<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-        한강수온{{temp}}
-</div>
+
 {% endblock %}

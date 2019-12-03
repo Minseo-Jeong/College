@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # from django import 
 from django.http import HttpResponse
-
+from .models import Predict_list
 
 # Create your views here.
 
@@ -125,21 +125,37 @@ def Test(request):
     return render(request, 'predictionView.html')
 
 def posttest(request):
-    print(request.POST['korean'])
-    print(request.POST['math'])
-    print(request.POST['English'])
-    print(request.POST['research1'])
-    print(request.POST['research2'])
-    print(request.POST['history'])
-    
+    # print(request.POST['college'])
+    # print(request.POST['major'])
+    # print(request.POST['korean'])
+    # print(request.POST['math'])
+    # print(request.POST['English'])
+    # print(request.POST['research1'])
+    # print(request.POST['research2'])
+    # print(request.POST['history'])
+
+    data = Predict_list.objects.get(college_name=request.POST['college'],major_name=request.POST['major'])
+    result = 900
+
     context = {
-        'korean':request.POST['korean'],
-        'math':request.POST['math'],
-        'English':request.POST['English'],
-        'research1':request.POST['research1'],
-        'research2':request.POST['research2'],
-        'history':request.POST['history'],
+        'result':result,
+        'college': data.as_dict()
     }
 
     return render(request, 'resultView.html', context)
+
+def ModelToDict(request):
+    all_list = Predict_list.objects.all()
+    # return render(request, 'predictionView.html',{'list':[item.as_dict() for item in list]})
+    item_list = [item.as_dict() for item in all_list]
+    filter_item = []
+    for item in item_list:
+        tmp = list(filter(lambda x: x['college_name'] == item['college_name'],filter_item))
+        if len(tmp) == 0:
+            filter_item.append(item)
+    print(filter_item)
+    return render(request, 'predictionView.html',{'filter_list':filter_item,'list':item_list})
+    
+
+
     

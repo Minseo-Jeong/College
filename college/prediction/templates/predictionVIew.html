@@ -1,21 +1,355 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .body {
+        position: relative;
+        font-family:
+            'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+
+    .card__form {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card__form__selectgroup {
+        display: flex;
+        width: 100%;
+    }
+
+    .card__form__selectgroup>select {
+        margin-right: 10px;
+        width: 200px;
+    }
+
+    #major {
+        display: none;
+    }
+
+    .wrap {
+        position: absolute;
+        right: 0;
+        top: 40%;
+        width: 350px;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    /* select starting stylings ------------------------------*/
+    .select {
+        font-family:
+            'Roboto', 'Helvetica', 'Arial', sans-serif;
+        position: relative;
+        width: 350px;
+    }
+
+    .select-text {
+        position: relative;
+        font-family: inherit;
+        background-color: transparent;
+        width: 350px;
+        padding: 10px 10px 10px 0;
+        font-size: 18px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    /* Remove focus */
+    .select-text:focus {
+        outline: none;
+        border-bottom: 2px solid #64d8cb;
+    }
+
+    /* Use custom arrow */
+    .select .select-text {
+        appearance: none;
+        -webkit-appearance: none
+    }
+
+    .select:after {
+        position: absolute;
+        top: 18px;
+        right: 10px;
+        /* Styling the down arrow */
+        width: 0;
+        height: 0;
+        padding: 0;
+        content: '';
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid rgba(0, 0, 0, 0.12);
+        pointer-events: none;
+    }
+
+
+    /* LABEL ======================================= */
+    .select-label {
+        color: rgba(0, 0, 0, 0.26);
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 0;
+        top: 10px;
+        transition: 0.2s ease all;
+    }
+
+    /* active state */
+    .select-text:focus~.select-label,
+    .select-text:valid~.select-label {
+        color: #64d8cb;
+        top: -20px;
+        transition: 0.2s ease all;
+        font-size: 14px;
+    }
+
+    /* BOTTOM BARS ================================= */
+    .select-bar {
+        position: relative;
+        display: block;
+        width: 350px;
+    }
+
+    .select-bar:before,
+    .select-bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #64d8cb;
+        transition: 0.2s ease all;
+    }
+
+    .select-bar:before {
+        left: 50%;
+    }
+
+    .select-bar:after {
+        right: 50%;
+    }
+
+    /* active state */
+    .select-text:focus~.select-bar:before,
+    .select-text:focus~.select-bar:after {
+        width: 50%;
+    }
+
+    /* HIGHLIGHTER ================================== */
+    .select-highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    /* Variables
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+:root {
+	--primary-c: #2196F3;
+	--secondary-c: #B2D7F5;
+	
+	--white: #FDFBFB;
+	
+	--text: #082943;	
+	--bg: var(--primary-c);
+}
+
+
+/* Basic Config
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	font-family: 'Raleway', sans-serif;
+	color: var(--text);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 50px;
+	margin: 0;
+}
+
+li {
+	display: block;
+	position: relative;
+	padding: 20px 0px;
+}
+
+h2 {
+	margin: 10px 0;
+	font-weight: 900;
+}
+*{font-family: 'Roboto', sans-serif;}
+
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -80px;
+    opacity: 0;
+  }
+}
+
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #40e0d0;
+}
+.option-input:checked::before {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 26.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+
+
+</style>
+
 <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action="/prediction/post/" method="post">
+    <form action="/prediction/post/" method="post" class="card__form">
         {% csrf_token %}
-        <input type="text" style="margin: 3%;" name="korean"><br>
-        <input type="text" style="margin: 3%;" name="math"><br>
-        <input type="text" style="margin: 3%;" name="English"><br>
-        <input type="text" style="margin: 3%;" name="research1"><br>
-        <input type="text" style="margin: 3%;" name="research2"><br>
-        <input type="text" style="margin: 3%;" name="history">
-        <!-- {% for choice in question.choice_set.all %} -->
-            <!-- <input type="radio" name="choice" id="choice_{{ forloop.counter }}" value="{{choice.id}}">    
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
-        <!-- {% endfor %} -->
-        <input type="submit" value="분석하기"> 
+        <div class="card__form__selectgroup">
+            <select class="select-text" name="college" id="college" onchange="selectChange(event)" required>
+                <option value="" selected disabled hidden>대학</option>
+                {% for item in filter_list %}
+                <option value="{{item.college_name}}">{{item.college_name}}</option>
+                {% endfor %}
+                
+            </select>
+            <select name="major" id="major" class="select-text" required>
+                <option value="" selected disabled hidden>학과</option>
+            </select>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="korean" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">국어</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="math" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">수학</label>
+            
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="English" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">영어</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="research1" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">탐구1</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="research2" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">탐구2</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input name="history" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" for="sample3">한국사</label>
+        </div>
+        <br>
+        <div style="text-align: center;">
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background: #64d8cb; color: white; width: 100%; max-width:300px; ">
+                    분석하기
+                </button>
+            </div>
     </form>
 </div>
 
+<script>
+    var major = document.getElementById("major");
+    var value = "";
+    const data = JSON.parse("{{ list }}".replace(/&#39;/g, "\""));
+    console.log(data)
+    function selectChange(e) {
+        value = e.target.options[e.target.selectedIndex].value
+        if (value) {
+            major.style.display = "block"
+        }
+        else {
+            major.style.display = "none"
+        }
+        major.innerHTML = `<option value="" selected disabled hidden>학과</option>`
+        data.filter(x => x.college_name == value).forEach(x => {
+            major.innerHTML += `<option value="${x.major_name}">${x.major_name}</option>`
+        })
+    }
+</script>
 {% endblock %}

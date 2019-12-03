@@ -15,6 +15,7 @@ class MainView(ListView):
     def get_obj(self):       
         return model.objects.all()
         # return HttpResponse("Hello, world!")
+        
 
 
 # def Test(request):

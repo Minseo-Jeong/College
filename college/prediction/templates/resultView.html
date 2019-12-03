@@ -1,11 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    {{ korean }}<br>
-    {{ math }}<br>
-    {{ English }}<br>
-    {{ research1 }}<br>
-    {{ research2 }}<br>
-    {{ history }}<br>
+    <div style="width:100%; ">
+        <canvas id="graph"></canvas>
+    </div>
+    <!-- <br>
+    <br> -->
+    <!-- 내 성적
+    {{result}}
+    커트라인 -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textclass">
+            <label class="textlabel">내 성적</label>
+            <h3 class="textView">{{result}}</h3>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textclass">
+            <label class="textlabel">커트라인</label>
+            <h3 class="textView">{{result}}</h3>
+    </div>
+    
+
 </div>
+<style>
+        .textlabel{
+            color: lightseagreen; 
+            font-size: small;
+            margin-left: 1%;
+        }
+        .textView{
+            margin: 0;
+            color: #757575;
+        }
+        .textclass{
+            padding: 0;
+            margin-left: 3%;
+            /* display: block; */
+            padding: 0;
+        }
+    </style>
+<script>
+    var graph = document.getElementById("graph").getContext('2d');
+    const result = parseInt("{{result}}")
+    const data = JSON.parse("{{ college }}".replace(/&#39;/g, "\""));
+
+    var chart = new Chart(graph, {
+        type: 'horizontalBar',
+
+        data: {
+            labels: [data.college_name,"내 성적"],
+            datasets: [{
+                type: 'horizontalBar',
+                label: '점수',
+                data: [data.cutline,result]
+            }]
+        }
+    })
+
+</script>
 {% endblock %}
+
+<!-- #757575 -->
