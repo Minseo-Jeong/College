@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- {{major_info_list}} -->
 {% if major_info_list %}
 
 {% for major in major_info_list %}
-<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="display: flex;flex-direction: column; align-items: flex-start; padding: 20px;">
+<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="display: flex;flex-direction: column; align-items: flex-start; padding: 10px;">
     <div style="display: flex;">
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-left: 10px; margin-right: 10px; ">school</i>
         <h6 style="margin: 0; margin-top: 2px;">{{major.MajorName}}</h6>

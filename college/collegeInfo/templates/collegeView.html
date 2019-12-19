@@ -39,7 +39,7 @@
         */
         /* padding-right: auto; */
     }
-    @media screen and (max-width: 1280px) {
+    @media screen and (max-width: 1200px) {
         .content{
         grid-template-rows: repeat(2, 1fr);
         grid-template-columns: repeat(2, 1fr);
@@ -54,16 +54,12 @@
         }
     }
   </style>
-<!-- <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid"> -->
+
     
     <div class="content">
 {% if college_info_list %}
     {% for college in college_info_list %}
-            <!-- <li>
-                {{college.college_name}} <br>
-                {{college.info}} <br>
-                <!-- {{college.established}} <br> -->
-                <!-- {{college.location}} -->
+
                 
 
             <div class="card">
@@ -71,7 +67,7 @@
                 <div class="container">
                   <h4>{{college.college_name}}</h4>
                   <p>{{college.info}}</p>
-                  <!-- <p>{{college.location}}</p> -->
+
 
                 </div>
             </div>

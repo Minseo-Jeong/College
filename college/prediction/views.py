@@ -3,7 +3,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Predict_list
 import numpy as np
+from selenium import webdriver
 
+path = '/Users/srjms/Downloads/webdriver/chromedriver'
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('window-size=1920x1080')
+options.add_argument("disable-gpu")
+#headless options
+driver = webdriver.Chrome(path, chrome_options=options)
 
 
 
@@ -15,31 +23,39 @@ def Test(request):
     return render(request, 'predictionView.html')
 
 def posttest(request):
-    # print(request.POST['college'])
-    # print(request.POST['major'])
-    # print(request.POST['korean'])
-    # print(request.POST['math'])
-    # print(request.POST['math_select'])
-    # print(request.POST['English'])
-    # print(request.POST['research_select'])
-    # print(request.POST['research1'])
-    # print(request.POST['research2'])
-    # print(request.POST['history'])
-    # print(type(request.POST['korean']))
-
+ 
     data = Predict_list.objects.get(college_name=request.POST['college'], major_name=request.POST['major'])
     print('pk='+str(data.pk))
-    result = 900
+    # result = 900
+
+    # arr_grade = [
+    #     int(request.POST['korean']),
+    #     int(request.POST['math']),
+    #     int(request.POST['math_select']),
+    #     int(request.POST['English']),
+    #     int(request.POST['research_select']),
+    #     int(request.POST['research1']),
+    #     int(request.POST['research2']),
+    #     int(request.POST['history']),
+    # ]
+    korean = int(request.POST['korean'])
+    math = int(request.POST['math'])
+    math_select = int(request.POST['math_select'])
+    English = int(request.POST['English'])
+    research_select = int(request.POST['research_select'])
+    research1 = int(request.POST['research1'])
+    research2 = int(request.POST['research2'])
+    history = int(request.POST['history'])
 
     arr_grade = [
-        int(request.POST['korean']),
-        int(request.POST['math']),
-        int(request.POST['math_select']),
-        int(request.POST['English']),
-        int(request.POST['research_select']),
-        int(request.POST['research1']),
-        int(request.POST['research2']),
-        int(request.POST['history']),
+        korean,
+        math,
+        math_select,
+        English,
+        research_select,
+        research1,
+        research2,
+        history
     ]
 
     class GradeAnalysis():
@@ -225,14 +241,38 @@ def posttest(request):
 
 
     # pk_index = data.pk
+    driver.get('http://suneung.xyz/input.htm')
+    driver.implicitly_wait(10)
 
+    driver.find_element_by_xpath('//*[@id="school_preset"]/input[1]').click()# 학교 선택
+
+    driver.find_element_by_xpath('//*[@id="aff_type"]/option[2]').click() #계열 2==자연 3==인문
+
+    driver.find_element_by_xpath('/html/body/div/form/table/tbody/tr[2]/th[1]/select/option[2]').click()# 수학 가형==1 나형==2
+
+
+    driver.find_element_by_xpath('/html/body/div/form/table/tbody/tr[1]/th[6]/select/option[2]').click()# 탐구 1 == 과탐 2 == 사탐
+
+    driver.find_element_by_xpath('/html/body/div/form/table/tbody/tr[2]/th[2]/select/option[1]').click()# 물1
+    driver.find_element_by_xpath('/html/body/div/form/table/tbody/tr[2]/th[3]/select/option[8]').click()#지2
+
+    driver.find_element_by_xpath('//*[@id="s1"]').send_keys('130')
+    driver.find_element_by_xpath('//*[@id="s2"]').send_keys('130')
+    driver.find_element_by_xpath('//*[@id="s3"]').send_keys('1')
+    driver.find_element_by_xpath('//*[@id="s4"]').send_keys('3')
+    driver.find_element_by_xpath('//*[@id="s5"]').send_keys('60')
+    driver.find_element_by_xpath('//*[@id="s6"]').send_keys('60')
+
+
+    driver.find_element_by_xpath('/html/body/div/form/div[2]/div').click()
 
 
 
 
     context = {
         'result': result,
-        'college': data.as_dict()
+        'college': data.as_dict(),
+        'href' : driver.current_url
     }
 
     return render(request, 'resultView.html', context)
